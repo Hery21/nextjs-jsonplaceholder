@@ -1,14 +1,15 @@
 'use client'
 
-import { Box } from '@mui/material'
-import PostsClients from '../contents/PostsClients'
-import NewPostComponent from './NewPostComponent'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { Box } from '@mui/material'
+import axios from 'axios'
+import PostsClients from '../contents/PostsClients'
+import NewPostComponent from '../contents/NewPostComponent'
 import DeleteDialog from '../contents/DeleteDialog'
 
 export default function HomePage() {
   const [posts, setPosts] = useState([])
+  const [users, setUsers] = useState([])
 
   const handleSetPosts = (val) => {
     setPosts((prevItem) => [val, ...prevItem])
@@ -25,7 +26,17 @@ export default function HomePage() {
       }
     }
 
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+        setUsers(res.data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
     fetchPosts()
+    fetchUsers()
   }, [])
 
   const initialPostState = {
@@ -119,9 +130,10 @@ export default function HomePage() {
   return (
     <>
       <Box display="flex" flexDirection="column">
-        <PostsClients posts={posts} handleClickEditPost={handleClickEditPost} handleClickDeletePost={handleClickDeletePost} />
+        <PostsClients users={users} posts={posts} handleClickEditPost={handleClickEditPost} handleClickDeletePost={handleClickDeletePost} />
       </Box>
       <NewPostComponent
+        title={isEdit ? 'Edit' : 'New'}
         handleOpenPostDialog={handleOpenPostDialog}
         openPostDialog={openPostDialog}
         handleSetNewPost={handleSetNewPost}

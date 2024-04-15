@@ -1,10 +1,9 @@
-'use client'
 import { Box, Button, ButtonBase, TextField } from '@mui/material'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
-import DialogComponent from '../contents/DialogComponents'
+import DialogComponent from './DialogComponents'
 
-export default function NewPostComponent({ handleOpenPostDialog, openPostDialog, handleSetNewPost, newPost, handlePost }) {
+export default function NewPostComponent({ title, handleOpenPostDialog, openPostDialog, handleSetNewPost, newPost, handlePost }) {
   return (
     <>
       <ButtonBase
@@ -13,7 +12,7 @@ export default function NewPostComponent({ handleOpenPostDialog, openPostDialog,
       >
         <HistoryEduIcon sx={{ width: '50px', height: '50px', color: 'black', p: 0.5 }} />
       </ButtonBase>
-      <DialogComponent title={'New Post'} open={openPostDialog} maxWidth={'540px'}>
+      <DialogComponent title={`${title} Post`} open={openPostDialog} maxWidth={'540px'}>
         <TextField
           label="Title"
           name="title"

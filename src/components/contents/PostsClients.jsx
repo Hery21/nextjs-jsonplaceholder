@@ -1,14 +1,24 @@
 import PostsContents from './PostContents'
 
-export default function PostsClients({ posts, handleClickEditPost, handleClickDeletePost }) {
+export default function PostsClients({ users, posts, handleClickEditPost, handleClickDeletePost }) {
+  const combinedData = posts.map((post) => {
+    const user = users.find((user) => user.id === post.userId)
+    return {
+      ...post,
+      user: user || {}
+    }
+  })
+
   return (
     <>
-      {posts?.map((post) => (
+      {combinedData?.map((data) => (
         <PostsContents
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          body={post.body}
+          key={data.id}
+          id={data.id}
+          title={data.title}
+          body={data.body}
+          name={data.user.name}
+          username={data.user.username}
           handleClickEditPost={handleClickEditPost}
           handleClickDeletePost={handleClickDeletePost}
         />
