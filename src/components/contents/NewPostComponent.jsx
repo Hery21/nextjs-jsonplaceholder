@@ -20,7 +20,14 @@ export default function NewPostComponent({ title, handleOpenPostDialog, openPost
           fullWidth
           onChange={handleSetNewPost}
           value={newPost.title}
-          sx={{ width: '500px', mt: 2 }}
+          sx={{
+            width: '500px',
+            mt: 2,
+            borderColor: 'black',
+            '&:hover': {
+              borderColor: 'black'
+            }
+          }}
         />
         <TextField
           label="Subject"
@@ -31,7 +38,14 @@ export default function NewPostComponent({ title, handleOpenPostDialog, openPost
           rows={3}
           onChange={handleSetNewPost}
           value={newPost.body}
-          sx={{ width: '500px', mt: 2 }}
+          sx={{
+            width: '500px',
+            mt: 2,
+            borderColor: 'black',
+            '&:hover': {
+              borderColor: 'black'
+            }
+          }}
         />
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
           <Button variant="contained" onClick={handlePost} sx={{ backgroundColor: 'black', mt: 1, '&:hover': { backgroundColor: 'grey' } }}>
