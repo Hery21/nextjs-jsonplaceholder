@@ -11,10 +11,9 @@ export default function AlbumContent({ albums, photos }) {
     }
   })
 
-  console.log(combinedData)
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplate: 'repeat(3, 200px) / repeat(3, 200px)', gap: '20px' }}>
+      <Box sx={{ display: 'grid', gridTemplate: 'repeat(3, auto) / repeat(3, auto)', gap: '20px' }}>
         {combinedData.map((data) => (
           <AlbumCard key={data.id} albumTitle={data.title} thumbnail={data.photo.thumbnailUrl} />
         ))}

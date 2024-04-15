@@ -1,36 +1,49 @@
 import { styled, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
 import React from 'react'
 
-const StyledTableRow = styled(TableRow)(() => ({
-  backgroundColor: 'grey',
-  '&:nth-of-type(odd)': {
-    backgroundColor: 'white'
-  }
+const StyledTable = styled(Table)({
+  backgroundColor: '#f0f0f0',
+  border: '1px solid #000',
+  borderRadius: '4px',
+  width: '100%'
+})
+
+const StyledTableHead = styled(TableHead)({
+  backgroundColor: '#333'
+})
+
+const StyledTableCell = styled(TableCell)({
+  color: '#fff',
+  fontWeight: 'bold'
+})
+
+const StyledTableRow = styled(TableRow)(({ index }) => ({
+  backgroundColor: index % 2 === 0 ? '#fff' : '#f5f5f5'
 }))
 
 export default function UserTable({ users }) {
   return (
-    <Table sx={{ backgroundColor: 'grey', mx: 2 }}>
-      <TableHead sx={{ backgroundColor: 'black', border: '1px solid white' }}>
+    <StyledTable>
+      <StyledTableHead>
         <TableRow>
-          <TableCell sx={{ color: 'white' }}>No</TableCell>
-          <TableCell sx={{ color: 'white' }}>Name</TableCell>
-          <TableCell sx={{ color: 'white' }}>Username</TableCell>
-          <TableCell sx={{ color: 'white' }}>E-mail</TableCell>
-          <TableCell sx={{ color: 'white' }}>Address</TableCell>
+          <StyledTableCell>No</StyledTableCell>
+          <StyledTableCell>Name</StyledTableCell>
+          <StyledTableCell>Username</StyledTableCell>
+          <StyledTableCell>E-mail</StyledTableCell>
+          <StyledTableCell>Address</StyledTableCell>
         </TableRow>
-      </TableHead>
-      <TableBody sx={{ backgroundColor: 'grey' }}>
+      </StyledTableHead>
+      <TableBody>
         {users.map((user, idx) => (
-          <StyledTableRow key={user.id}>
-            <TableCell sx={{ color: 'black' }}>{idx + 1}</TableCell>
-            <TableCell sx={{ color: 'black' }}>{user.name}</TableCell>
-            <TableCell sx={{ color: 'black' }}>{user.username}</TableCell>
-            <TableCell sx={{ color: 'black' }}>{user.email}</TableCell>
-            <TableCell sx={{ color: 'black' }}>{user.address.street}</TableCell>
+          <StyledTableRow key={user.id} index={idx}>
+            <TableCell>{idx + 1}</TableCell>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.username}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.address.street}</TableCell>
           </StyledTableRow>
         ))}
       </TableBody>
-    </Table>
+    </StyledTable>
   )
 }

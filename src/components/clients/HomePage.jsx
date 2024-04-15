@@ -113,7 +113,6 @@ export default function HomePage() {
   const handleClickDeletePost = (id) => {
     handleDeleteDialog()
     setDeleteId(id)
-    console.log(id)
   }
 
   const handleDeletePost = async () => {
