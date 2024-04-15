@@ -10,7 +10,7 @@ export default function Navbar({ children }) {
           <NavMenu />
         </Toolbar>
       </AppBar>
-      <Box sx={{ backgroundColor: 'black', width: '100vw', display: 'flex', justifyContent: 'center', mt: '60px' }}>{children}</Box>
+      <Box sx={{ backgroundColor: 'black', width: '100vw', display: 'flex', justifyContent: 'center', mt: '70px' }}>{children}</Box>
     </Box>
   )
 }
