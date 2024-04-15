@@ -5,6 +5,7 @@ import PostsClients from '../contents/PostsClients'
 import NewPostComponent from './NewPostComponent'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import DeleteDialog from '../contents/DeleteDialog'
 
 export default function HomePage() {
   const [posts, setPosts] = useState([])
@@ -72,7 +73,7 @@ export default function HomePage() {
     handleOpenPostDialog()
   }
 
-  const handlePutEditPost = async () => {
+  const handlePatchEditPost = async () => {
     try {
       const res = await axios.put(`https://jsonplaceholder.typicode.com/posts/${newPost.id}`, newPost)
       const newArray = posts.map((item) => {
@@ -90,8 +91,29 @@ export default function HomePage() {
     handleIsEdit()
   }
 
-  const handleClickDeletePost = async (id) => {
-    console.log('delete', id)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const [deleteId, setDeleteId] = useState(null)
+
+  const handleDeleteDialog = () => {
+    setOpenDeleteDialog(!openDeleteDialog)
+  }
+
+  const handleClickDeletePost = (id) => {
+    handleDeleteDialog()
+    setDeleteId(id)
+    console.log(id)
+  }
+
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${deleteId}`)
+      const newArray = posts.filter((item) => item.id !== deleteId)
+      setPosts(newArray)
+    } catch (err) {
+      console.error(err)
+    }
+    handleDeleteDialog()
+    setDeleteId(null)
   }
 
   return (
@@ -104,8 +126,9 @@ export default function HomePage() {
         openPostDialog={openPostDialog}
         handleSetNewPost={handleSetNewPost}
         newPost={newPost}
-        handlePost={isEdit ? handlePutEditPost : handlePost}
+        handlePost={isEdit ? handlePatchEditPost : handlePost}
       />
+      <DeleteDialog openDeleteDialog={openDeleteDialog} handleDeleteDialog={handleDeleteDialog} handleDeletePost={handleDeletePost} />
     </>
   )
 }
