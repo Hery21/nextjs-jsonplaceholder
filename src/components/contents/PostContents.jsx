@@ -4,12 +4,14 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-export default function PostsContents({ id, title, body, username, name, handleClickEditPost, handleClickDeletePost }) {
+export default function PostsContents({ id, title, body, username, name, handleClickEditPost, handleClickDeletePost, handleGetComments }) {
   return (
     <Paper elevation={10} sx={{ m: 1, width: '750px', borderRadius: 3 }}>
       <Box sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <AccountCircleIcon sx={{ mr: 2, width: '70px', height: '70px' }} />
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <AccountCircleIcon sx={{ mr: 2, width: '70px', height: '70px' }} />
+          </Box>
           <Box>
             <Box>
               <Typography fontWeight="bold" variant="h5">
@@ -32,7 +34,7 @@ export default function PostsContents({ id, title, body, username, name, handleC
               <DeleteIcon />
             </ButtonBase>
           </Box>
-          <ButtonBase>
+          <ButtonBase onClick={() => handleGetComments(id)}>
             <ModeCommentIcon />
           </ButtonBase>
         </Box>

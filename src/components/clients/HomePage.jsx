@@ -6,6 +6,7 @@ import axios from 'axios'
 import PostsClients from '../contents/PostsClients'
 import NewPostComponent from '../contents/NewPostComponent'
 import DeleteDialog from '../contents/DeleteDialog'
+import CommentsDialog from '../contents/CommentsDialog'
 
 export default function HomePage() {
   const [posts, setPosts] = useState([])
@@ -127,10 +128,37 @@ export default function HomePage() {
     setDeleteId(null)
   }
 
+  const [comments, setComments] = useState([])
+  const [commentPost, setCommentPost] = useState({})
+  const [openCommentsDialog, setOpenCommentsDialog] = useState(false)
+
+  const handleCommentsDialog = () => {
+    setOpenCommentsDialog(!openCommentsDialog)
+    setComments([])
+    setCommentPost({})
+  }
+
+  const handleGetComments = async (id) => {
+    handleCommentsDialog()
+    try {
+      const res = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+      setComments(res.data)
+    } catch (err) {
+      console.error(err)
+    }
+    setCommentPost(posts.find((p) => p.id === id))
+  }
+
   return (
     <>
       <Box display="flex" flexDirection="column">
-        <PostsClients users={users} posts={posts} handleClickEditPost={handleClickEditPost} handleClickDeletePost={handleClickDeletePost} />
+        <PostsClients
+          users={users}
+          posts={posts}
+          handleClickEditPost={handleClickEditPost}
+          handleClickDeletePost={handleClickDeletePost}
+          handleGetComments={handleGetComments}
+        />
       </Box>
       <NewPostComponent
         title={isEdit ? 'Edit' : 'New'}
@@ -141,6 +169,13 @@ export default function HomePage() {
         handlePost={isEdit ? handlePatchEditPost : handlePost}
       />
       <DeleteDialog openDeleteDialog={openDeleteDialog} handleDeleteDialog={handleDeleteDialog} handleDeletePost={handleDeletePost} />
+      <CommentsDialog
+        users={users}
+        openCommentsDialog={openCommentsDialog}
+        commentPost={commentPost}
+        comments={comments}
+        handleCommentsDialog={handleCommentsDialog}
+      />
     </>
   )
 }
