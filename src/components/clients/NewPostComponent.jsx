@@ -1,38 +1,10 @@
 'use client'
-import React, { useState } from 'react'
 import { Box, Button, ButtonBase, TextField } from '@mui/material'
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import DialogComponent from '../contents/DialogComponents'
-import axios from 'axios'
 
-export default function NewPostComponent({ handleSetPosts }) {
-  const [openPostDialog, setOpenPostDialog] = useState(false)
-  const [newPost, setNewPost] = useState({
-    userId: 1,
-    title: '',
-    body: ''
-  })
-
-  const handleOpenPostDialog = () => {
-    setOpenPostDialog(!openPostDialog)
-  }
-
-  const handleSetNewPost = (e) => {
-    e.preventDefault()
-    setNewPost((prevItem) => ({ ...prevItem, [e.target.name]: e.target.value }))
-  }
-
-  const handlePost = async () => {
-    try {
-      const res = await axios.post(`https://jsonplaceholder.typicode.com/posts`, newPost)
-      handleSetPosts(res.data)
-    } catch (err) {
-      console.error(err)
-    }
-    handleOpenPostDialog()
-  }
-
+export default function NewPostComponent({ handleOpenPostDialog, openPostDialog, handleSetNewPost, newPost, handlePost }) {
   return (
     <>
       <ButtonBase
